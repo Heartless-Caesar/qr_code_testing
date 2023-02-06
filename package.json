@@ -9,10 +9,16 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "buffer": "^6.0.3",
     "expo": "~47.0.12",
     "expo-status-bar": "~1.4.2",
+    "qrcode-reader": "^1.0.4",
     "react": "18.1.0",
-    "react-native": "0.70.5"
+    "react-native": "0.70.5",
+    "react-zlib-js": "^1.0.5",
+    "rn-fetch-blob": "^0.12.0",
+    "stream": "^0.0.2",
+    "expo-barcode-scanner": "~12.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
