@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import QR_reader from "./qr_code_reader";
+import ImagePickerExample from "./image_picker";
 
 export default function App() {
   return (
     <>
-      <QR_reader />
+      <ImagePickerExample />
     </>
   );
 }
