@@ -29,24 +29,44 @@ const QR_reader = () => {
 
   return (
     <View style={styles.container}>
-      <BarCodeScanner
-        style={StyleSheet.absoluteFillObject}
-        onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
-      />
-      {scanData && (
-        <Button title="Scan Again?" onPress={() => setScanData(undefined)} />
-      )}
-      <Text>{scanData}</Text>
+      <View style={styles.scanner_container}>
+        <BarCodeScanner
+          style={StyleSheet.absoluteFillObject}
+          onBarCodeScanned={scanData ? undefined : handleBarCodeScanned}
+        />
+      </View>
+      <View style={styles.data_container}>
+        {scanData && (
+          <Button title="Scan Again?" onPress={() => setScanData(undefined)} />
+        )}
+      </View>
+      <View style={styles.data}>
+        <Text>{scanData}</Text>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 4,
     flexDirection: "column",
     justifyContent: "center",
     backgroundColor: "#fff",
+  },
+  scanner_container: {
+    flex: 2,
+    marginTop: "20%",
+  },
+  data_container: {
+    flex: 1,
+    marginTop: "20%",
+    paddingHorizontal: "10%",
+  },
+  data: {
+    flex: 1,
+    paddingHorizontal: "10%",
+    paddingVertical: "5%",
   },
 });
 
