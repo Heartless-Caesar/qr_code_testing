@@ -23,7 +23,7 @@ const ImagePickerExample = () => {
           console.log(results.data); // May be the one you are looking for
           setScan(true);
           setData(results.data);
-        }
+        } 
       }
     } catch (error) {
       console.debug(error);
