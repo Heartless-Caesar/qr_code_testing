@@ -1,32 +1,41 @@
-import React, { useState, useEffect } from "react";
-import { Button, Image, View, Platform } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+import * as RNImagePicker from "expo-image-picker";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { Button, View } from "react-native";
+import { useState } from "react";
 
-export default function ImagePickerExample() {
-  const [image, setImage] = useState(null);
+const ImagePickerExample = () => {
+  const [scan, setScan] = useState(false);
+  const [data, setData] = useState(null);
 
-  const pickImage = async () => {
-    // No permissions request is necessary for launching the image library
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    console.log(result.assets[0].uri);
-
-    if (!result.canceled) {
-      setImage(result.assets[0].uri);
+  const decode = async () => {
+    try {
+      const { status } =
+        await RNImagePicker.requestMediaLibraryPermissionsAsync();
+      if (status === "granted") {
+        const result = RNImagePicker.launchImageLibraryAsync({
+          options: {
+            allowsMultipleSelection: false,
+          },
+        });
+        if (result && result.uri) {
+          const results = await BarCodeScanner.scanFromURLAsync(result.uri);
+          console.log(results); // many information
+          console.log(results.data); // May be the one you are looking for
+          setScan(true);
+          setData(results.data);
+        }
+      }
+    } catch (error) {
+      console.debug(error);
     }
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button title="Pick an image from camera roll" onPress={pickImage} />
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-      )}
+    <View style={{ marginTop: "20%" }}>
+      <Button title="Decode" onPress={() => decode()} />
+      {scan ? data : undefined}
     </View>
   );
-}
+};
+
+export default ImagePickerExample;
